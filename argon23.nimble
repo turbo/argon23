@@ -7,4 +7,4 @@ installDirs = @[
     "phc-winner-argon2"
 ]
 
-requires "nim >= 0.18.0"
+requires "nim >= 1.9.1"

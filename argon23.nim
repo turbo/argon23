@@ -4,7 +4,8 @@ from strutils import rsplit
 # Build Argon2 library
 #
 # Header files
-{.passC: "-I" & currentSourcePath().rsplit(DirSep, 1)[0] & "/phc-winner-argon2/include".}
+const pc = "-I" & currentSourcePath().rsplit(DirSep, 1)[0] & "/phc-winner-argon2/include"
+{. passC: pc .}
 # Source files
 {.compile: "phc-winner-argon2/src/argon2.c".}
 {.compile: "phc-winner-argon2/src/core.c".}
@@ -97,8 +98,6 @@ func argon2*(
   encstr = newStringOfCap(enclen)
   # discount NULL byte accounted for in encodedlen
   encstr.setLen(enclen - 1)
-  # don't copy on assignment for performance
-  encstr.shallow
 
   # pass everything off to the library
   let ret = c_argon2_hash(
